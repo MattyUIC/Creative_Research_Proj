@@ -2,8 +2,29 @@
 This file contains all the data generating functions.
 */
 
-var bill_txt = [
-    ""
+//BILL SPEC//
+/*
+  {    
+  "name": ,
+  "date": ,
+  "description": ,
+  "senate?" : ,
+  "yea": ,
+  "nay": ,
+  "not-voting": 
+  },
+ */
+
+var bills = [
+   {
+    "name": "H.R.1808 - Assault Weapons Ban of 2022",
+    "date": "Jul 29, 2022, 06:25 PM | 117th Congress, 2nd Session",
+    "description": "This bill makes it a crime to knowingly import, sell, manufacture, transfer,\n or possess a semiautomatic assault weapon (SAW) or large capacity ammunition feeding device (LCAFD).",
+    "senate?" : false,
+    "yea": 217,
+    "nay": 213,
+    "not-voting": 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+   },
 ]
 
 //unsure if we even need this...
