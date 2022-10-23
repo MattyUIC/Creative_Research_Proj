@@ -1,3 +1,11 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body{
+    background-color: black;
+}
 .start_button{
     position: absolute;
 }
@@ -9,3 +17,42 @@
     width: 100%;
     top: 25%;
 }
+
+.page_content{
+    background-color: darkorchid;
+    display: inline-grid;
+    grid-template-columns: 50% 50%;
+    position: absolute;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 100%;
+    visibility: visible;
+}
+.canvas_content{
+    height: 500px;
+    width: 500px;
+}
+.canvas_t{
+    visibility: visible;
+    width: 500px;
+    display: block;
+    background-color: aliceblue;
+}
+
+.page_content_left{}
+.page_content_right{overflow: auto;}
+
+.graphics_container{
+    position: absolute;
+    right: 5%;
+    width: 40%;
+    height: 40%;
+    top: 45%;
+
+}
+.graphics_canvas{
+    width: 100%;
+    height: 100%;
+}
+
