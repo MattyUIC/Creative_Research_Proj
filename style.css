@@ -33,6 +33,13 @@ body{
     height: 500px;
     width: 500px;
 }
+.vote_button_content{
+    /* display: inline-grid; */
+
+}
+.voting_yea{
+    margin-right: 2%;
+}
 .canvas_t{
     visibility: visible;
     width: 500px;
@@ -40,15 +47,20 @@ body{
     background-color: aliceblue;
 }
 
-.page_content_left{}
-.page_content_right{overflow: auto;}
+.page_content_left{
+    background-color: burlywood;
+}
+.page_content_right{
+    background-color:firebrick;
+}
 
 .graphics_container{
+    margin: 0;
     position: absolute;
     right: 5%;
     width: 40%;
-    height: 40%;
-    top: 45%;
+    height: 65%;
+    top: 33%;
 
 }
 .graphics_canvas{

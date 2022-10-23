@@ -129,6 +129,20 @@ function start_game(){
   draw();
 }
 
+/**
+ * TODO:
+ * 
+ * - Display user vote info, give some more insight? Definitely needs a header.
+ * 
+ * - We need to get rid of the yea/nay buttons after we vote.
+ * 
+ * - A 'next' button needs to show to allow for the next bill page to
+ *   be presented
+ * 
+ * - Once 'next' is clicked it removes the current bill page and displays the next bill. 
+ */
+
+
 function yay_vote(){
   let vote_data = {
     "user_vote": "yay",
@@ -152,7 +166,7 @@ function nay_vote(){
 
 function bill_breakdown_transition(vote_data){
   cnv.show();
-  cnv.background(255,0,0);
+  cnv.background(25,150,38);
   bar_graph(vote_data.bill)
 
 }
@@ -166,10 +180,48 @@ function bar_graph(bill_data){
                                               bill_data.nay.Dem, 
                                               bill_data.yea.Rep, 
                                               bill_data.nay.Rep];
+//
+  
+  let columns = 8;
+  let width_multiplyer = 0.14;
 
-  cnv.circle(cnv.width/2, cnv.height/2, 10)
+  let height = cnv.height;
+  let width = cnv.width;
+  let barBase = height*0.85;
+  let barCenter = width/columns;
+  let text_size = width*width_multiplyer/columns;
 
+  cnv.line(0, barBase, width, barBase)
+  for(i=1;i<8; i++){
+    if(i%2 != 0)
+      cnv.line(barCenter*i, barBase-4, barCenter*i, barBase+4 )
+  }
+
+
+  cnv.textSize(text_size);
+  cnv.text("Democrat yea votes: " + dem_yea, barCenter-6*text_size, barBase+25)
+  cnv.text("Democrat nay votes: " + dem_nay, barCenter*3-6*text_size, barBase+25)
+  cnv.text("Republican yea votes: " + rep_yea, barCenter*5-6*text_size, barBase+25)
+  cnv.text("Republican nay votes: " + rep_nay, barCenter*7-6*text_size, barBase+25)
+
+  for(i = 0; i< dem_yea; i++){
+    cnv.stroke(0,0,255)
+    cnv.line(barCenter-30, barBase-i-1,barCenter+30, barBase-i-1)
+  }
+  for(i = 0; i< dem_nay; i++){
+    cnv.stroke(0,0,255)
+    cnv.line(barCenter*3-30, barBase-i-1,barCenter*3+30, barBase-i-1)
+  }
+  for(i = 0; i< rep_yea; i++){
+    cnv.stroke(255,0,0)
+    cnv.line(barCenter*5-30, barBase-i-1,barCenter*5+30, barBase-i-1)
+  }
+  for(i = 0; i< rep_nay; i++){
+    cnv.stroke(255,0,0)
+    cnv.line(barCenter*7-30, barBase-i-1,barCenter*7+30, barBase-i-1)
+  }
 }
+
 
 function generate_game_bills(number_to_gen){
   let filled_bList = [];
@@ -178,6 +230,7 @@ function generate_game_bills(number_to_gen){
   }
   return filled_bList;
 }
+
 
 //TODO: Bar graph function. Sounds relatively easy to do. 
 //TODO: Pie chart function?? arc length?
@@ -197,6 +250,7 @@ function intro(){
   start_button.mousePressed(start_game);
 }
 
+
 function bill_q_page(){
   bill_count = game_bills.length-1;
   current_bill = game_bills.pop();
@@ -205,19 +259,18 @@ function bill_q_page(){
                                           current_bill.date, 
                                           current_bill.description, 
                                           current_bill.senate]; 
-
-
+  //
 
   //Container for all content on page
   let page_content = createElement('div');
   page_content.class('page_content').id('bill_' + bill_count);
   
   //Container for the right side of the content (Bill information and voting buttons)
-  let bill_q_content_left = createElement('div').class('page_content_right');
+  let bill_q_content_left = createElement('div').class('page_content_right').id('bill_q_left');
   bill_q_content_left.parent(page_content);
 
   //Container for the left side content (Bill graph breakdowns and post voting graphics)
-  let bill_q_content_right = createElement('div').class('page_content_left');
+  let bill_q_content_right = createElement('div').class('page_content_left').id('bill_q_right');
   bill_q_content_right.parent(page_content);
 
   //Container the graphics content
@@ -228,7 +281,8 @@ function bill_q_page(){
   //default js functions to grab the graphics_container element's width and height
   let [gcW, gcH] = [document.getElementById('gc').clientWidth ,
                     document.getElementById('gc').clientHeight]
-
+  //
+  
   cnv = createGraphics(gcW, gcH);
   cnv.parent(graphics_container);
   cnv.class('graphics_canvas');
@@ -246,9 +300,9 @@ function bill_q_page(){
   }
 
   //Container for voting buttons, TODO: Spacer included so each button within can be 33% large
-  let bill_button_content = createElement('div').parent(bill_q_content_left);
-  let yay = createElement('button', "yay").parent(bill_button_content);
-  let bill_button_spacer_div = createElement('div').parent(bill_button_content);
+  let bill_button_content = createElement('div').class('vote_button_content');
+  bill_button_content.parent(bill_q_content_left);
+  let yay = createElement('button', "yay").class("voting_yea").parent(bill_button_content);
   let nay = createElement('button', "nay").parent(bill_button_content);
 
 
