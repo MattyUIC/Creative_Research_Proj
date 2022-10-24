@@ -43,8 +43,10 @@
     {
       "name": "H.R.kittyboi - test Ban of 2301",
       "date": "Jul 29, 2022, 06:25 PM | 117th Congress, 2nd Session",
-      "description": ["Big kitty moby wants to sit on your lap but he has a turd hanging from his bum?",
-                      "What the big kitty do?"
+      "description": ["Big kitty moby wants to sit on your lap is that cool?",
+                      "What the big kitty do?",
+                      "He is very fluffy and warm.",
+                      "Maggie kitty wants nothing to do with him so can he stay here 0.0?"
                      ],
       "senate" : false,
       "yea": {
@@ -92,30 +94,17 @@ let bill_count; //Used to create reference ids in order to hide each bill
 
 let cnv;
 
-
-
-
-
 function setup() {
   start = true;
   current_bill = 0;
   bill_count = 0;
-  game_bills = [];
+  game_bills = generate_game_bills(5);
   user_votes = [];
-
-
 
   noLoop();
   noCanvas();
-}
 
-function draw() {
-  background(0);
-  if(start){
-    intro();
-  } else {
-    bill_q_page();
-  }
+  intro();
 }
 
 // ======================
@@ -123,10 +112,10 @@ function draw() {
 // ======================
 
 function start_game(){
-  document.getElementById('start_page_content').style.display = 'none';
+  document.getElementById('start_page_content').remove();
   start = false;
-  game_bills = generate_game_bills(5);
-  draw();
+ // game_bills = generate_game_bills(5);
+  bill_q_page();
 }
 
 /**
@@ -142,18 +131,32 @@ function start_game(){
  * - Once 'next' is clicked it removes the current bill page and displays the next bill. 
  */
 
+function nextBill(){
+  document.getElementById('bill_' + bill_count).remove();
+
+  if(bill_count == 0){
+    end_page();
+    return;
+  }
+    
+  bill_q_page();
+
+}
 
 function yay_vote(){
+
   let vote_data = {
     "user_vote": "yay",
     "bill": current_bill
   };
-  user_votes.push(vote_data);
 
+  user_votes.push(vote_data);
+  
   bill_breakdown_transition(vote_data);
 }
 
 function nay_vote(){
+
   let vote_data = {
     "user_vote": "nay",
     "bill": current_bill
@@ -165,9 +168,14 @@ function nay_vote(){
 }
 
 function bill_breakdown_transition(vote_data){
+  document.getElementById('vote_button_content').style.display = 'none';
+  
+  //gets rid of the voting buttons once the user has submit their vote
+  document.getElementById('next_button_content').style.display = 'block';
   cnv.show();
-  cnv.background(25,150,38);
-  bar_graph(vote_data.bill)
+
+  //cnv.background(25,150,38);
+  bar_graph(vote_data.bill);
 
 }
 
@@ -239,6 +247,15 @@ function generate_game_bills(number_to_gen){
 //  DOM COMPONENTS
 // ================
 
+function end_page(){
+  let end_page_content = createElement('div');
+  end_page_content.class('intro');
+
+  let title = createElement('h1', "The games over, you can go now.").parent(end_page_content);
+  let sub_t = createElement('h2', "But in all seriousness. I will be putting a breakdown of all\nthe votes, I just have not had the time to get to that yet :3").parent(end_page_content);
+
+}
+
 function intro(){
   let start_page_content = createElement('div');
   start_page_content.class('intro').id('start_page_content');
@@ -254,7 +271,7 @@ function intro(){
 function bill_q_page(){
   bill_count = game_bills.length-1;
   current_bill = game_bills.pop();
-  console.log(current_bill);
+  console.log("This is current bill ",current_bill);
   let [name, date, description, senate] = [current_bill.name, 
                                           current_bill.date, 
                                           current_bill.description, 
@@ -277,12 +294,13 @@ function bill_q_page(){
   let graphics_container = createElement('div').class('graphics_container').id('gc');
   graphics_container.parent(bill_q_content_right);
  
+  
+
   //P5 elt div object initializing with height 0 and I don't know why. I use the 
   //default js functions to grab the graphics_container element's width and height
   let [gcW, gcH] = [document.getElementById('gc').clientWidth ,
                     document.getElementById('gc').clientHeight]
-  //
-  
+  // 
   cnv = createGraphics(gcW, gcH);
   cnv.parent(graphics_container);
   cnv.class('graphics_canvas');
@@ -300,13 +318,19 @@ function bill_q_page(){
   }
 
   //Container for voting buttons, TODO: Spacer included so each button within can be 33% large
-  let bill_button_content = createElement('div').class('vote_button_content');
+  let bill_button_content = createElement('div').class('vote_button_content').id('vote_button_content');
   bill_button_content.parent(bill_q_content_left);
   let yay = createElement('button', "yay").class("voting_yea").parent(bill_button_content);
   let nay = createElement('button', "nay").parent(bill_button_content);
 
+  let next_button_content = createElement('div').class('next_button_content').id('next_button_content');
+  next_button_content.parent(page_content);
+  next_button_content.hide();
 
- 
+  let next_button = createElement('button', "Next").class("next_button")
+  next_button.parent(next_button_content);
+
+  next_button.mousePressed(nextBill);
   yay.mousePressed(yay_vote);
   nay.mousePressed(nay_vote);
 }
