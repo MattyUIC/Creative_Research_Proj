@@ -195,7 +195,7 @@ function bar_graph(bill_data){
 
   let height = cnv.height;
   let width = cnv.width;
-  let barBase = height*0.85;
+  let barBase = height*0.90;
   let barCenter = width/columns;
   let text_size = width*width_multiplyer/columns;
 
@@ -207,10 +207,10 @@ function bar_graph(bill_data){
 
 
   cnv.textSize(text_size);
-  cnv.text("Democrat yea votes: " + dem_yea, barCenter-6*text_size, barBase+25)
-  cnv.text("Democrat nay votes: " + dem_nay, barCenter*3-6*text_size, barBase+25)
-  cnv.text("Republican yea votes: " + rep_yea, barCenter*5-6*text_size, barBase+25)
-  cnv.text("Republican nay votes: " + rep_nay, barCenter*7-6*text_size, barBase+25)
+  cnv.text("Democrat yea votes: " + dem_yea, barCenter-6*text_size, barBase+text_size)
+  cnv.text("Democrat nay votes: " + dem_nay, barCenter*3-6*text_size, barBase+text_size)
+  cnv.text("Republican yea votes: " + rep_yea, barCenter*5-6*text_size, barBase+text_size)
+  cnv.text("Republican nay votes: " + rep_nay, barCenter*7-6*text_size, barBase+text_size)
 
   for(i = 0; i< dem_yea; i++){
     cnv.stroke(0,0,255)
@@ -258,11 +258,18 @@ function end_page(){
 
 function intro(){
   let start_page_content = createElement('div');
-  start_page_content.class('intro').id('start_page_content');
+  start_page_content.id('start_page_content');
+  
+  let start_page_img = createElement('div');
+  start_page_img.id('start_page_img').class('blur_box').parent(start_page_content);
 
-  let title = createElement('h1', "Who's side is it anyway?").parent(start_page_content);
-  let sub_t = createElement('h2', "A simple game to see who's side you are really on.").parent(start_page_content);
-  let start_button = createButton("Start").parent(start_page_content);
+  let intro_title_content = createElement('div');
+  intro_title_content.class('intro bg').parent(start_page_content);
+
+  let title = createElement('h1', "Who's side is it anyway?").parent(intro_title_content);
+  let sub_t = createElement('h2', "A simple game to see who's side you are really on.").parent(intro_title_content);
+  let start_button = createButton("Start").parent(intro_title_content);
+  start_button.class("paper white")
 
   start_button.mousePressed(start_game);
 }
@@ -283,16 +290,16 @@ function bill_q_page(){
   page_content.class('page_content').id('bill_' + bill_count);
   
   //Container for the right side of the content (Bill information and voting buttons)
-  let bill_q_content_left = createElement('div').class('page_content_right').id('bill_q_left');
-  bill_q_content_left.parent(page_content);
+  let bill_q_content_top = createElement('div').class('page_content_top').id('bill_q_top');
+  bill_q_content_top.parent(page_content);
 
   //Container for the left side content (Bill graph breakdowns and post voting graphics)
-  let bill_q_content_right = createElement('div').class('page_content_left').id('bill_q_right');
-  bill_q_content_right.parent(page_content);
+  let bill_q_content_bottom = createElement('div').class('page_content_bottom').id('bill_q_bottom');
+  bill_q_content_bottom.parent(page_content);
 
   //Container the graphics content
   let graphics_container = createElement('div').class('graphics_container').id('gc');
-  graphics_container.parent(bill_q_content_right);
+  graphics_container.parent(bill_q_content_bottom);
  
   
 
@@ -306,11 +313,11 @@ function bill_q_page(){
   cnv.class('graphics_canvas');
 
   //Container for Bill Title content
-  let bill_title_content = createElement('div').parent(bill_q_content_left);
+  let bill_title_content = createElement('div').parent(bill_q_content_top);
   let title = createElement('h1', name).parent(bill_title_content);
 
   //Container for bill description content
-  let bill_description_content = createElement('div').parent(bill_q_content_left);
+  let bill_description_content = createElement('div').parent(bill_q_content_top);
   let bill_description_list = createElement('ul').parent(bill_description_content);
   let bill_description_element_array = [];
   for(i = 0; i<description.length; i++){  //Creates bullet list of important bill points
@@ -319,9 +326,9 @@ function bill_q_page(){
 
   //Container for voting buttons, TODO: Spacer included so each button within can be 33% large
   let bill_button_content = createElement('div').class('vote_button_content').id('vote_button_content');
-  bill_button_content.parent(bill_q_content_left);
-  let yay = createElement('button', "yay").class("voting_yea").parent(bill_button_content);
-  let nay = createElement('button', "nay").parent(bill_button_content);
+  bill_button_content.parent(bill_q_content_bottom);
+  let yay = createElement('button', "yay").class("voting_yea paper pink").parent(bill_button_content);
+  let nay = createElement('button', "nay").class("paper blue").parent(bill_button_content);
 
   let next_button_content = createElement('div').class('next_button_content').id('next_button_content');
   next_button_content.parent(page_content);
