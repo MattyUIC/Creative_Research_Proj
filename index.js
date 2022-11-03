@@ -285,23 +285,27 @@ function bill_q_page(){
                                           current_bill.senate]; 
   //
 
+  let bill_page_container = createElement('div');
+  let bill_q_page_img = createElement('div');
+  bill_q_page_img.id('bill_q_page_img').class('blur_box').parent(bill_page_container); 
+
   //Container for all content on page
-  let page_content = createElement('div');
-  page_content.class('page_content').id('bill_' + bill_count);
+  let bill_page_content = createElement('div');
+  bill_page_content.class('page_content').parent(bill_page_container).id('bill_' + bill_count);
   
   //Container for the right side of the content (Bill information and voting buttons)
   let bill_q_content_top = createElement('div').class('page_content_top').id('bill_q_top');
-  bill_q_content_top.parent(page_content);
+  bill_q_content_top.parent(bill_page_content);
 
   //Container for the left side content (Bill graph breakdowns and post voting graphics)
   let bill_q_content_bottom = createElement('div').class('page_content_bottom').id('bill_q_bottom');
-  bill_q_content_bottom.parent(page_content);
+  bill_q_content_bottom.parent(bill_page_content);
 
   //Container the graphics content
   let graphics_container = createElement('div').class('graphics_container').id('gc');
   graphics_container.parent(bill_q_content_bottom);
  
-  
+
 
   //P5 elt div object initializing with height 0 and I don't know why. I use the 
   //default js functions to grab the graphics_container element's width and height
@@ -331,7 +335,7 @@ function bill_q_page(){
   let nay = createElement('button', "nay").class("paper blue").parent(bill_button_content);
 
   let next_button_content = createElement('div').class('next_button_content').id('next_button_content');
-  next_button_content.parent(page_content);
+  next_button_content.parent(bill_page_content);
   next_button_content.hide();
 
   let next_button = createElement('button', "Next").class("next_button")
