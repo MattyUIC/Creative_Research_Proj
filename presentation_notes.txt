@@ -1,11 +1,12 @@
-- Use html files to declare elements
+- HTML stuff
 	Easier to see at a glance
 	logic separated from structure
 	keep track of ids and classes applied to elements
 	
-- Probably wouldn't us p5 for displaying graphs
+- JS Stuff
 	- There are other frameworks that come with more robust visual representations and functionality
 	- Don't need to remake the wheel
+	- Need to work on .
 
 - Better UI
 	- Menu that sits on top of the content with a set of buttons for settings etc.

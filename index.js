@@ -1,3 +1,4 @@
+
 /*
   {    
   "name": ,
@@ -27,6 +28,7 @@ let current_bill; //Initialized to 0 in setup(), Holds current bill for referenc
 let game_bills; //filled with random set from bills
 let user_votes; //array of objects, containing user_vote and bill 
 let bill_count; //Used to create reference ids in order to hide each bill
+let game_size;
 
 let cnv;
 
@@ -34,8 +36,10 @@ function setup() {
   start = true;
   current_bill = 0;
   bill_count = 0;
-  game_bills = generate_game_bills(2);
+  game_size = 5;
+  game_bills = generate_game_bills(game_size);
   user_votes = [];
+  
 
   noLoop();
   noCanvas();
@@ -157,11 +161,30 @@ function bar_graph(bill_data){
   }
 }
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
 
 function generate_game_bills(number_to_gen){
+  var shuffled_b = shuffle(bills)
   let filled_bList = [];
+
   for(var i=0;i<number_to_gen;i++){
-    filled_bList.push(random(bills));
+    filled_bList.push(shuffled_b[i]);
   }
   return filled_bList;
 }
