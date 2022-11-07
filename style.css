@@ -1,3 +1,11 @@
+.wip{
+    /* Container for bill title and description */
+    text-align: left;
+    /* font-size: 1vw; This needs to be played around with... */
+    margin-left: 4vw; 
+}
+
+
 html, body {
     margin: 0;
     height: 100%;
@@ -7,33 +15,54 @@ html, body {
     position: absolute;
 }
 
+.bg_bill_content{
+    margin: 0;
+    right: 5%;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+
+    text-align: left;
+    font-size: 1.2vw;
+
+}
+
+.end_page_content{
+    width: 80%;
+    position: absolute;
+    text-align: center;
+
+}
+
 .bg{
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
     color: white;
     font-weight: bold;
     border: 3px solid #f1f1f1;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-    width: 80%;
+    /* width: 80%; */
     padding: 20px;
-    text-align: center;
+    /* text-align: center; */
 }
 
-.bg h1{
-    font-size: 5vw;
-}
 
-.bg h2{
+
+.intro h2{
     font-size: 2vw;
 }
 
 .blur_box{
     filter: blur(8px);
     -webkit-filter: blur(8px);
+}
+
+.intro h1{
+    font-size: 5vw;
 }
 
 .intro{
@@ -106,11 +135,18 @@ html, body {
     right: 1%;
     height: 10%;
     width: 18%;
+    z-index: 5;
 }
 
 .next_button{
+    content: url("./imgs/gavel_PNG30.png");
+    transform: rotate(15deg);
     width: 100%;
     height: 100%;
+}
+
+.next_button:hover{
+    transform: rotate(0deg);
 }
 
 

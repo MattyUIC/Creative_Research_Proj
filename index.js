@@ -1,4 +1,3 @@
-//BILL SPEC//
 /*
   {    
   "name": ,
@@ -20,70 +19,7 @@
   },
  */
 
-  var bills = [
-    {
-     "name": "H.R.1808 - Assault Weapons Ban of 2022",
-     "date": "Jul 29, 2022, 06:25 PM | 117th Congress, 2nd Session",
-     "description": ["This bill makes it a crime to knowingly import, sell, manufacture, transfer,\n or possess a semiautomatic assault weapon (SAW) or large capacity ammunition feeding device (LCAFD).",
-                    ],
-     "senate" : false,
-     "yea": {
-            "Dem":217,
-            "Rep":0
-          },
-     "nay": {
-            "Dem":0,
-            "Rep":213
-          },
-     "not-voting":{
-            "Dem": 0,
-            "Rep": 1
-          }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-    },
-    {
-      "name": "H.R.kittyboi - test Ban of 2301",
-      "date": "Jul 29, 2022, 06:25 PM | 117th Congress, 2nd Session",
-      "description": ["Big kitty moby wants to sit on your lap is that cool?",
-                      "What the big kitty do?",
-                      "He is very fluffy and warm.",
-                      "Maggie kitty wants nothing to do with him so can he stay here 0.0?"
-                     ],
-      "senate" : false,
-      "yea": {
-             "Dem":217,
-             "Rep":214
-           },
-      "nay": {
-             "Dem":0,
-             "Rep":0
-           },
-      "not-voting":{
-             "Dem": 0,
-             "Rep": 0
-           }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-     },
-     {
-      "name": "H.R.420 - Another one",
-      "date": "Jul 29, 2022, 06:25 PM | 117th Congress, 2nd Session",
-      "description": ["Another one.",
-                      "Another one",
-                      "Another one"],
-      "senate" : false,
-      "yea": {
-             "Dem":0,
-             "Rep":214
-           },
-      "nay": {
-             "Dem":217,
-             "Rep":0
-           },
-      "not-voting":{
-             "Dem": 0,
-             "Rep": 0
-           }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-     },
-    
- ];
+// bills list imported from data_gen.js 
 
 
 let start; //Initialized to true in setup()
@@ -98,7 +34,7 @@ function setup() {
   start = true;
   current_bill = 0;
   bill_count = 0;
-  game_bills = generate_game_bills(5);
+  game_bills = generate_game_bills(2);
   user_votes = [];
 
   noLoop();
@@ -117,19 +53,6 @@ function start_game(){
  // game_bills = generate_game_bills(5);
   bill_q_page();
 }
-
-/**
- * TODO:
- * 
- * - Display user vote info, give some more insight? Definitely needs a header.
- * 
- * - We need to get rid of the yea/nay buttons after we vote.
- * 
- * - A 'next' button needs to show to allow for the next bill page to
- *   be presented
- * 
- * - Once 'next' is clicked it removes the current bill page and displays the next bill. 
- */
 
 function nextBill(){
   document.getElementById('bill_' + bill_count).remove();
@@ -177,6 +100,8 @@ function bill_breakdown_transition(vote_data){
   //cnv.background(25,150,38);
   bar_graph(vote_data.bill);
 
+  console.log(user_votes)
+
 }
 
 // ================
@@ -199,12 +124,14 @@ function bar_graph(bill_data){
   let barCenter = width/columns;
   let text_size = width*width_multiplyer/columns;
 
+  cnv.fill(255);
+  cnv.stroke(255)
   cnv.line(0, barBase, width, barBase)
   for(i=1;i<8; i++){
     if(i%2 != 0)
       cnv.line(barCenter*i, barBase-4, barCenter*i, barBase+4 )
   }
-
+  
 
   cnv.textSize(text_size);
   cnv.text("Democrat yea votes: " + dem_yea, barCenter-6*text_size, barBase+text_size)
@@ -240,19 +167,36 @@ function generate_game_bills(number_to_gen){
 }
 
 
-//TODO: Bar graph function. Sounds relatively easy to do. 
 //TODO: Pie chart function?? arc length?
 
 // ================
 //  DOM COMPONENTS
 // ================
 
+/**
+ *   let vote_data = {
+    "user_vote": "nay",
+    "bill": current_bill
+  };
+ */
+
 function end_page(){
   let end_page_content = createElement('div');
-  end_page_content.class('intro');
+  end_page_content.class('bg end_page_content');
+  console.log(user_votes)
+  for(i = 0;  i<user_votes.length; i++){
+    var user_vote = user_votes[i];
+    // console.log("This is the user vote: " + )
 
-  let title = createElement('h1', "The games over, you can go now.").parent(end_page_content);
-  let sub_t = createElement('h2', "But in all seriousness. I will be putting a breakdown of all\nthe votes, I just have not had the time to get to that yet :3").parent(end_page_content);
+    let user_vote_info_container = createElement('div');
+    user_vote_info_container.class("end_page_user_vote").id("vote_" + i);
+    user_vote_info_container.parent(end_page_content);
+
+    let user_vote_bill_title = createElement('h1', user_vote.bill.name).parent(user_vote_info_container);
+    let user_vote_bill_user_vote_choice = createElement('h2', user_vote.user_vote).parent(user_vote_info_container);
+
+
+  }
 
 }
 
@@ -269,7 +213,7 @@ function intro(){
   let title = createElement('h1', "Who's side is it anyway?").parent(intro_title_content);
   let sub_t = createElement('h2', "A simple game to see who's side you are really on.").parent(intro_title_content);
   let start_button = createButton("Start").parent(intro_title_content);
-  start_button.class("paper white")
+  start_button.class("paper white");
 
   start_button.mousePressed(start_game);
 }
@@ -293,11 +237,15 @@ function bill_q_page(){
   let bill_page_content = createElement('div');
   bill_page_content.class('page_content').parent(bill_page_container).id('bill_' + bill_count);
   
-  //Container for the right side of the content (Bill information and voting buttons)
+  //Container for the top side of the content (Bill information and voting buttons)
   let bill_q_content_top = createElement('div').class('page_content_top').id('bill_q_top');
   bill_q_content_top.parent(bill_page_content);
 
-  //Container for the left side content (Bill graph breakdowns and post voting graphics)
+  let top_content_shade_box = createElement('div').class('bg bg_bill_content').parent(bill_q_content_top);
+  
+
+
+  //Container for the bottom side content (Bill graph breakdowns and post voting graphics)
   let bill_q_content_bottom = createElement('div').class('page_content_bottom').id('bill_q_bottom');
   bill_q_content_bottom.parent(bill_page_content);
 
@@ -314,14 +262,14 @@ function bill_q_page(){
   // 
   cnv = createGraphics(gcW, gcH);
   cnv.parent(graphics_container);
-  cnv.class('graphics_canvas');
+  cnv.class('graphics_canvas bg');
 
   //Container for Bill Title content
-  let bill_title_content = createElement('div').parent(bill_q_content_top);
+  let bill_title_content = createElement('div').parent(top_content_shade_box);
   let title = createElement('h1', name).parent(bill_title_content);
 
   //Container for bill description content
-  let bill_description_content = createElement('div').parent(bill_q_content_top);
+  let bill_description_content = createElement('div').parent(top_content_shade_box);
   let bill_description_list = createElement('ul').parent(bill_description_content);
   let bill_description_element_array = [];
   for(i = 0; i<description.length; i++){  //Creates bullet list of important bill points
@@ -338,7 +286,7 @@ function bill_q_page(){
   next_button_content.parent(bill_page_content);
   next_button_content.hide();
 
-  let next_button = createElement('button', "Next").class("next_button")
+  let next_button = createElement('div', "Next").class("next_button")
   next_button.parent(next_button_content);
 
   next_button.mousePressed(nextBill);

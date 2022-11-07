@@ -1,0 +1,25 @@
+- Use html files to declare elements
+	Easier to see at a glance
+	logic separated from structure
+	keep track of ids and classes applied to elements
+	
+- Probably wouldn't us p5 for displaying graphs
+	- There are other frameworks that come with more robust visual representations and functionality
+	- Don't need to remake the wheel
+
+- Better UI
+	- Menu that sits on top of the content with a set of buttons for settings etc.
+		This would also better frame the content
+	- More animation on buttons
+	
+- Concept did not turn out how I wanted it to
+	- Its not exactly what I envisioned. Not saying what I wanted.
+	- Needs a lot more research
+		Data should be more talored and include more eras of american politics ******
+	- Separate modules for Senate and Congress
+	- Supreme court may have been a better game
+	- Functionality is too bare for an engaging game
+	- No pacing. Game starts, user votes, game ends. Kinda bland
+	- Visual style not homogenous 
+	- Needs a better title
+	
